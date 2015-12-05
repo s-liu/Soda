@@ -1,6 +1,7 @@
 #ifndef _NAMESERVER_H_
 #define _NAMESERVER_H_
 
+#include "vector"
 using namespace std;
 
 _Task NameServer {

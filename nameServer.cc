@@ -23,3 +23,16 @@ VendingMachine* getMachine( unsigned int id ) {
 VendingMachine** getMachineList() {
     return &_machineList[0];
 }
+
+void NameServer::main(){
+    for(int currentVM = 0; currentVM < _numVendingMachines; currentVM ++){
+        _Accept(VMregister);
+    }
+
+    // Wait for task to call getMachine or get MachineList
+    for(;;){
+        _Accept(~NameServer){
+            break;
+        } or _Accept(getMachine, getMachineList);
+    }
+}
