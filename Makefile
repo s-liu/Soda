@@ -3,7 +3,7 @@ CXX = u++					# compiler
 CXXFLAGS = -g -multi -Wall -Wno-unused-label -MMD -O2  -DPAD
 MAKEFILE_NAME = ${firstword ${MAKEFILE_LIST}}	# makefile name
 
-OBJECTS = main.o student.o
+OBJECTS = main.o student.o watCard.o
 EXECS = 1soda				# all executables
 
 DEPENDS = ${OBJECTS:.o=.d}			# substitute ".o" with ".d"
