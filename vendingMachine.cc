@@ -2,7 +2,7 @@
 #include "watCard.cc"
 
 VendingMachine::VendingMachine( Printer &prt, NameServer &nameServer, unsigned int id, unsigned int sodaCost, unsigned int maxStockPerFlavour ) : _printer(prt), _id(id), _sodaCost(sodaCost), _maxStockPerFlavour(maxStockPerFlavour), _exception_flag(0) {
-	int inv [4];
+	unsigned int inv [4];
 	_inventory = inv;
 	for (unsigned int i = 0; i < 4; i++) {
 		_inventory[i] = 0;

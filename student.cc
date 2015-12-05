@@ -12,30 +12,34 @@ void Student::main() {
 	unsigned int currPurchase = 0;
 	// create watCard with $5 balance and a gift card
 	WATCard *watCard = NULL;
+	WATCard *giftCard = NULL;
 	FWATCard fWatCard = _cardOffice.create(_id, 5);
 	FWATCard fGiftCard = _groupoff.giftCard();
 	VendingMachine* vMachine = _nameServer.getMachine(_id);
 
-	// yield
-	yield(rdm(1,10));
 
 	for (;;) {
 		if (currPurchase == purchase) break;
 		try {
 			_Select(fWatCard) {
 				watCard = fWatCard();
+				// yield
+				yield(rdm(1,10));
 				vMachine.buy(flavour, watCard);
 			} or _Select(fGiftCard) {
-				vMachine.buy(flavour, *fGiftCard());
+				giftCard = fGiftCard();
+				// yield
+				yield(rdm(1,10));
+				vMachine.buy(flavour, giftCard); 
 				fGiftCard.reset();
 			}
 			currPurchase++;
-		} catch (WATCardOffice::Lost) {
+		} catch (WATCardOffice::Lost &e) {
 			fWatCard.reset();
 			fWatCard = _cardOffice.create(_id, 5);
-		} catch (VendingMachine::Funds) {
+		} catch (VendingMachine::Funds &e) {
 			_cardOffice.transfer(_id, 5 + vMachine->cost(), watCard);
-		} catch (VendingMachine::Stock) {
+		} catch (VendingMachine::Stock &e) {
 			vMachine = _nameServer.getMachine(_id);
 		}
 	}

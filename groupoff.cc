@@ -23,7 +23,7 @@ void Groupoff::main() {
 			giftCard->deposit(_sodaCost);
 			unsigned randomIndex = rdm(_cards.size()-1);
 			_cards[randomIndex].delivery(giftCard);		
-			_cards.erase(_cards.begin+randomIndex);
+			_cards.erase(_cards.begin()+randomIndex);
 		}
 	}
 }
