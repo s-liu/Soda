@@ -1,9 +1,9 @@
 #ifndef _STUDENT_H_
 #define _STUDENT_H_
-#include "printer.h"
-#include "nameServer.h"
-#include "watCardOffice.h"
-#include "groupoff.h"
+//#include "printer.h"
+//#include "nameServer.h"
+//#include "watCardOffice.h"
+//#include "groupoff.h"
 
 _Task Student {
 	Printer &_printer;
