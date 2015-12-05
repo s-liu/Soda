@@ -1,6 +1,8 @@
 #ifndef _WATCARD_H_
 #define _WATCARD_H_
 
+#include <uFuture.h>
+
 class WATCard {
 	unsigned int _balance;
     WATCard( const WATCard & );            // prevent copying
