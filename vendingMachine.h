@@ -9,7 +9,7 @@ _Task VendingMachine {
 	unsigned int _id;
 	unsigned int _sodaCost;
 	unsigned int _maxStockPerFlavour;
-	int* _inventory;
+	unsigned int* _inventory;
 	uCondition _lock;
 	unsigned int _currFlavour;
 	WATCard &_currCard;
