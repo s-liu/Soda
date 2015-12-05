@@ -31,6 +31,7 @@ void Student::main() {
 			}
 			currPurchase++;
 		} catch (WATCardOffice::Lost) {
+			fWatCard.reset();
 			fWatCard = _cardOffice.create(_id, 5);
 		} catch (VendingMachine::Funds) {
 			_cardOffice.transfer(_id, 5 + vMachine->cost(), watCard);
