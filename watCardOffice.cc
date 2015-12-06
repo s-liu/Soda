@@ -11,8 +11,11 @@ WATCardOffice::WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers
 }
 
 WATCardOffice::~WATCardOffice() {
+	cout << "wat card office destructor" << endl;
 	for (unsigned int i = 0; i < _numCouriers; i++) {
+		cout << "try to delete courier" << endl;
 		delete _courier_arr[i];
+		cout << "done delete courier" << endl;
 	}
 	delete [] _courier_arr;
 }
@@ -57,10 +60,13 @@ void WATCardOffice::main() {
 void WATCardOffice::Courier::main() {
 	_office->_printer.print(Printer::Kind::Courier, _id, 'S');
 	for (;;) {
+		cout << "entering the loop" << endl;
 		_Accept( ~Courier ) {
+			cout << "caught destructor" << endl;
 			_office->_printer.print(Printer::Kind::Courier, _id, 'F');
 			break;
 		} _Else {
+			cout << "elseeeee" << endl;
 			Job* job = _office->requestWork();
 			Args a = job->args;
 			_office->_printer.print(Printer::Kind::Courier, _id, 't', a.sid, a.amount);

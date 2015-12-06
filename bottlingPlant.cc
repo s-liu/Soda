@@ -35,7 +35,9 @@ void BottlingPlant::main(){
 					break;
 				}
 			} or _Accept(getShipment);
-		} catch (uMutexFailure::RendezvousFailure) {}
+		} catch (uMutexFailure::RendezvousFailure) {
+			break;
+		}
     }
 
     // End
