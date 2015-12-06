@@ -14,7 +14,7 @@ _Task BottlingPlant {
         unsigned int _maxShippedPerFlavour;
         unsigned int _maxStockPerFlavour;
         unsigned int _timeBetweenShipments;
-        unsigned int _quantity;
+        unsigned int _quantity[4];
         vector<unsigned int> _prod;
         bool isDown = false;
     public:
