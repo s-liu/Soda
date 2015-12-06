@@ -12,6 +12,9 @@ BottlingPlant::BottlingPlant( Printer &prt, NameServer &nameServer, unsigned int
     _timeBetweenShipments(timeBetweenShipments) {}
 
 void BottlingPlant::main(){
+
+    // Start
+    _prt.print(Printer::Kind::BottlingPlant, 'S');
     new Truck(_prt, _nameServer, *this, _numVendingMachines, _maxStockPerFlavour);
     for(;;){
 
@@ -21,6 +24,7 @@ void BottlingPlant::main(){
             for(unsigned int flav = 0; flav < 4; flav++)
                 _prod.push_back(flav);
         }
+        _prt.print(Printer::Kind::BottlingPlant, 'G', quantity);
         
         // Yeild between production run
         yield(_timeBetweenShipments);
@@ -30,6 +34,9 @@ void BottlingPlant::main(){
             break;
         } or _Accept(getShipment);
     }
+
+    // End
+    _prt.print(Printer::Kind::BottlingPlant, 'F');
 }
 
 void BottlingPlant::getShipment(unsigned int cargo[]) {
@@ -39,4 +46,6 @@ void BottlingPlant::getShipment(unsigned int cargo[]) {
     for(unsigned int item = 0; item < _prod.size(); item++){
         cargo[item] = _prod[item];    
     }
+
+    _prt.print(Printer::Kind::BottlingPlant, 'P');
 }
