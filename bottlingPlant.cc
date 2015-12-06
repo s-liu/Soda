@@ -28,10 +28,14 @@ void BottlingPlant::main(){
         // Yeild between production run
         yield(_timeBetweenShipments);
         // Wait for the truck to pickup the shipment
-        _Accept(~BottlingPlant) {
-            isDown = true;
-            break;
-        } or _Accept(getShipment);
+		try {
+			_Accept(~BottlingPlant) {
+				isDown = true;
+				_Accept(getShipment) {
+					break;
+				}
+			} or _Accept(getShipment);
+		} catch (uMutexFailure::RendezvousFailure) {}
     }
 
     // End

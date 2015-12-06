@@ -32,6 +32,7 @@ void Truck::main() {
 			_plant.getShipment(_cargo);
 			_printer.print(Printer::Kind::Truck, 'P', total());
 		} catch (BottlingPlant::Shutdown) {
+			cout << "caught shutdown exception" << endl;
 			clear();
 			_printer.print(Printer::Kind::Truck, 'F');
 			break;
@@ -57,6 +58,7 @@ void Truck::main() {
 				_printer.print(Printer::Kind::Truck, 'U', vmList[curr]->getId(), total_not_replenished);
 			}
 			_printer.print(Printer::Kind::Truck, 'D', vmList[curr]->getId(), total());
+			vmList[curr]->restocked();
 			curr++;
 		}
 	}
