@@ -12,7 +12,7 @@ BottlingPlant::BottlingPlant( Printer &prt, NameServer &nameServer, unsigned int
     _timeBetweenShipments(timeBetweenShipments) {}
 
 void BottlingPlant::main(){
-
+    
     // Start
     _prt.print(Printer::Kind::BottlingPlant, 'S');
     new Truck(_prt, _nameServer, *this, _numVendingMachines, _maxStockPerFlavour);
@@ -21,18 +21,27 @@ void BottlingPlant::main(){
         unsigned int quantity = rdm(0, _maxShippedPerFlavour);
         // simulate procution
         for(unsigned int num = 0; num < quantity; num++) {
-            for(unsigned int flav = 0; flav < 4; flav++)
+            for(unsigned int flav = 0; flav < 4; flav++){
                 _prod.push_back(flav);
+            }
         }
+
         _prt.print(Printer::Kind::BottlingPlant, 'G', quantity);
         
         // Yeild between production run
         yield(_timeBetweenShipments);
+
+        cout << "yeild" << endl;
         // Wait for the truck to pickup the shipment
         _Accept(~BottlingPlant) {
+            cout << "DESTORYED" << endl;
             isDown = true;
             break;
-        } or _Accept(getShipment);
+        } or _Accept(getShipment){
+            cout << "continue accept" << endl; 
+        }
+
+        cout << "END END" << endl;
     }
 
     // End
@@ -41,11 +50,11 @@ void BottlingPlant::main(){
 
 void BottlingPlant::getShipment(unsigned int cargo[]) {
     if(isDown) _Throw Shutdown();
-
-    // transfer item
+    
     for(unsigned int item = 0; item < _prod.size(); item++){
         cargo[item] = _prod[item];    
     }
-
+    
     _prt.print(Printer::Kind::BottlingPlant, 'P');
+    cout << "shipment end" << endl;
 }

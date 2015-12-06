@@ -40,25 +40,41 @@ void VendingMachine::main() {
 	_printer.print(Printer::Kind::Vending, _id, 'S', _sodaCost);
 	_nameServer.VMregister(this);
 	for (;;) {
-		_Accept(~VendingMachine) {
+		cout << "vm1" << endl;
+        _Accept(~VendingMachine) {
+		    cout << "vm2" << endl;
 			_printer.print(Printer::Kind::Vending, _id, 'F');
 			break;
 		} or _Accept(inventory) {
+		    cout << "vm3" << endl;
 			_printer.print(Printer::Kind::Vending, _id, 'r');
 			_Accept(restocked) {
 				_printer.print(Printer::Kind::Vending, _id, 'R');
 			}
 		} or _Accept(buy) {
+		    cout << "vm4" << endl;
 			if (_inventory[_currFlavour] == 0) {
-				_exception_flag = 1;
+				
+		cout << "vm1" << endl;
+                _exception_flag = 1;
 			} else if (_currCard->getBalance() < _sodaCost) {
-				_exception_flag = 2;
+			
+		cout << "vm1" << endl;
+                _exception_flag = 2;
 			} else {
-				_currCard->withdraw(_sodaCost);
-				_inventory[_currFlavour] --;
-				_printer.print(Printer::Kind::Vending, _id, 'B', _currFlavour, _inventory[_currFlavour]);
+				
+		cout << "vm1" << endl;
+                _currCard->withdraw(_sodaCost);
+		
+		cout << "vm1" << endl;
+                _inventory[_currFlavour] --;
+				
+		cout << "vm1" << endl;
+                _printer.print(Printer::Kind::Vending, _id, 'B', _currFlavour, _inventory[_currFlavour]);
 			}
-			_lock.signalBlock();
+			
+		cout << "vm1" << endl;
+            _lock.signalBlock();
 		}
 	}
 }

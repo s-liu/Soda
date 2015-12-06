@@ -29,8 +29,11 @@ void Truck::main() {
 	VendingMachine** vmList = _nameServer.getMachineList();
 	for (;;) {
 		try {
+            cout << "yeild1" << endl;
 			yield(rdm(1,10));
+            cout << "Calling shipment" << endl;
 			_plant.getShipment(_cargo);
+            cout << "GOT CARGO" << endl;
 			_printer.print(Printer::Kind::Truck, 'P', total());
 		} catch (BottlingPlant::Shutdown) {
 			_printer.print(Printer::Kind::Truck, 'F');
@@ -45,7 +48,7 @@ void Truck::main() {
 				break;
 			}
 			_printer.print(Printer::Kind::Truck, 'd', vmList[curr]->getId(), total());
-			unsigned int* inv = vmList[curr]->inventory();
+            unsigned int* inv = vmList[curr]->inventory();
 			unsigned int total_not_replenished = 0;
 			for (unsigned int i = 0; i < 4; i++) {
 				unsigned int replenish = min ((_maxStockPerFlavour - inv[i]), _cargo[i]);
