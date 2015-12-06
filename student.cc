@@ -1,7 +1,7 @@
 #include "student.h"
 #include "MPRNG.h"
 
-MPRNG rdm;
+extern MPRNG rdm;
 
 Student::Student( Printer &prt, NameServer &nameServer, WATCardOffice &cardOffice, Groupoff &groupoff, unsigned int id, unsigned int maxPurchases ) : _printer(prt), _nameServer(nameServer), _cardOffice(cardOffice), _groupoff(groupoff), _id(id), _maxPurchases(maxPurchases) {}
 
@@ -13,8 +13,8 @@ void Student::main() {
 	// create watCard with $5 balance and a gift card
 	WATCard *watCard = NULL;
 	WATCard *giftCard = NULL;
-	FWATCard fWatCard = _cardOffice.create(_id, 5);
-	FWATCard fGiftCard = _groupoff.giftCard();
+    WATCard::FWATCard fWatCard = _cardOffice.create(_id, 5);
+    WATCard::FWATCard fGiftCard = _groupoff.giftCard();
 	VendingMachine* vMachine = _nameServer.getMachine(_id);
 
 
@@ -25,12 +25,12 @@ void Student::main() {
 				watCard = fWatCard();
 				// yield
 				yield(rdm(1,10));
-				vMachine.buy(flavour, watCard);
+				vMachine->buy(static_cast<VendingMachine::Flavours>(flavour), *watCard);
 			} or _Select(fGiftCard) {
 				giftCard = fGiftCard();
 				// yield
 				yield(rdm(1,10));
-				vMachine.buy(flavour, giftCard); 
+				vMachine->buy(static_cast<VendingMachine::Flavours>(flavour), *giftCard); 
 				fGiftCard.reset();
 			}
 			currPurchase++;

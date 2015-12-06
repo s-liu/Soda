@@ -1,6 +1,9 @@
 #include "truck.h"
+#include "MPRNG.h"
 
-Truck::Truck( Printer &prt, NameServer &nameServer, BottlingPlant &plant, unsigned int numVendingMachines, unsigned int maxStockPerFlavour ) : _printer(prt), _plant(plant), _numVendingMachines(numVendingMachines), _maxStockPerFlavour(maxStockPerFlavour) {
+extern MPRNG rdm;
+
+Truck::Truck( Printer &prt, NameServer &nameServer, BottlingPlant &plant, unsigned int numVendingMachines, unsigned int maxStockPerFlavour ) : _printer(prt), _nameServer(nameServer),  _plant(plant), _numVendingMachines(numVendingMachines), _maxStockPerFlavour(maxStockPerFlavour) {
 	unsigned int cargo [4];
 	_cargo = cargo;
 	clear();
@@ -26,7 +29,7 @@ void Truck::main() {
 	for (;;) {
 		try {
 			yield(rdm(1,10));
-			plant.getShipment(_cargo);
+			_plant.getShipment(_cargo);
 		} catch (BottlingPlant::Shutdown) {
 			break;
 		}	
@@ -40,7 +43,7 @@ void Truck::main() {
 			}
 			unsigned int* inv = vmList[curr]->inventory();
 			for (unsigned int i = 0; i < 4; i++) {
-				unsigned int replenish = min ((maxStockPerFlavour - inv[i]), _cargo[i]);
+				unsigned int replenish = min ((_maxStockPerFlavour - inv[i]), _cargo[i]);
 				inv[i] += replenish;
 				_cargo[i] -= replenish;
 			}

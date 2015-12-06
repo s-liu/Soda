@@ -3,6 +3,7 @@
 
 #include "vector"
 #include "nameServer.h"
+#include "truck.h"
 
 _Task BottlingPlant {
     private:

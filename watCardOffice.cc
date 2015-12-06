@@ -7,7 +7,7 @@ WATCardOffice::WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers
 	Courier* arr [numCouriers];
 	_courier_arr = arr;
 	for (unsigned int i = 0; i < _numCouriers; i++) {
-		_courier_arr[i] = new Courier();
+		_courier_arr[i] = new Courier(this, &_bank);
 	}
 }
 
@@ -51,10 +51,10 @@ void WATCardOffice::main() {
 
 void WATCardOffice::Courier::main() {
 	for (;;) {
-		Job* job = requestWork();
+		Job* job = _office->requestWork();
 		if (rdm(1,6)==1) job->result.exception(new Lost());
 		Args a = job->args;
-		bank.withdraw(a.sid, a.amount);
+		_bank->withdraw(a.sid, a.amount);
 		a.card->deposit(a.amount);
 		job->result.delivery(a.card);
 	}

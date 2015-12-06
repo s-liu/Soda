@@ -6,7 +6,7 @@ Printer::Printer( unsigned int numStudents, unsigned int numVendingMachines, uns
     _numCouriers(numCouriers) {
         _infos = vector<Info*>( 6 + numStudents + numVendingMachines + numCouriers );
 
-        cout << "Parent\tGroupoff\tWATOff\tNames\tTruck\tPlant\t";
+        cout << "Parent\tGropoff\tWATOff\tNames\tTruck\tPlant\t";
         for(unsigned int i = 0; i < numStudents; i++)
             cout << "Stud" << i << "\t";
         for(unsigned int i = 0; i < numVendingMachines; i++)

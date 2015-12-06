@@ -2,15 +2,15 @@
 #include "MPRNG.h"
 
 // Random Num Gen
-extern MPRG rmd;
+extern MPRNG rdm;
 
-Parent::Parent( Printer &prt, bank &bank, unsigned int numStudents, unsigned int parentalDelay ) : 
+Parent::Parent( Printer &prt, Bank &bank, unsigned int numStudents, unsigned int parentalDelay ) : 
     _numStudents(numStudents), 
     _parentalDelay(parentalDelay),
-    _bank(bank),
-    _prtprt() {}
+    _prt(prt),
+    _bank(bank) {}
 
-void Parent:main() {
+void Parent::main() {
     for(;;){
         // If destructor is called
         // then break from loop
@@ -18,9 +18,9 @@ void Parent:main() {
             break;
         } _Else {
             // Assigning the values
-            unsigned int money = rmd(1, 3);
-            unsigned int studentID = rmd(0, numStudents-1);
-            yeild(_parentalDelay);
+            unsigned int money = rdm(1, 3);
+            unsigned int studentID = rdm(0, _numStudents-1);
+            yield(_parentalDelay);
 
             // Printer??
             _bank.deposit(studentID, money);

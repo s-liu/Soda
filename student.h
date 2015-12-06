@@ -1,17 +1,18 @@
 #ifndef _STUDENT_H_
 #define _STUDENT_H_
-//#include "printer.h"
-//#include "nameServer.h"
-//#include "watCardOffice.h"
-//#include "groupoff.h"
+#include "printer.h"
+#include "nameServer.h"
+#include "watCardOffice.h"
+#include "groupoff.h"
+#include "vendingMachine.h"
 
 _Task Student {
 	Printer &_printer;
 	NameServer &_nameServer;
 	WATCardOffice &_cardOffice;
 	Groupoff &_groupoff;
-	unsigned int id;
-	unsigned int maxPurchases;
+	unsigned int _id;
+	unsigned int _maxPurchases;
 	
     void main();
   public:

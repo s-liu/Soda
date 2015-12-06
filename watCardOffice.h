@@ -21,8 +21,12 @@ _Task WATCardOffice {
         Job( Args args ) : args( args ) {}
     };
 
-    _Task Courier { 
-		void main();
+    _Task Courier {
+        WATCardOffice* _office;
+        Bank* _bank;
+        void main();
+      public:
+        Courier(WATCardOffice* office, Bank* bank) : _office(office), _bank(bank){}
 	};                 // communicates with bank
 
     void main();

@@ -2,6 +2,7 @@
 #define _VENDING_MACHINE_H_
 #include "watCard.h"
 #include "nameServer.h"
+#include "printer.h"
 
 _Task NameServer;
 
@@ -15,7 +16,7 @@ _Task VendingMachine {
 	unsigned int* _inventory;
 	uCondition _lock;
 	unsigned int _currFlavour;
-	WATCard &_currCard;
+	WATCard *_currCard;
 	unsigned int _exception_flag;
   public:
     enum Flavours { CLASSIC = 0, LIME = 1, ROOT_BEER = 2, CREAM_SODA = 3 };                 // flavours of soda (YOU DEFINE)

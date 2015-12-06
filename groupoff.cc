@@ -2,7 +2,7 @@
 #include "watCard.h"
 #include "MPRNG.h"
 
-MPRNG rdm;
+extern MPRNG rdm;
 
 Groupoff::Groupoff( Printer &prt, unsigned int numStudents, unsigned int sodaCost, unsigned int groupoffDelay ) : _printer(prt), _numStudents(numStudents), _sodaCost(sodaCost), _groupoffDelay(groupoffDelay) {}
 

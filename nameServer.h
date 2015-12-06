@@ -3,15 +3,16 @@
 
 #include <vector>
 #include "vendingMachine.h"
+#include "printer.h"
 using namespace std;
 
 _Task VendingMachine;
 
 _Task NameServer {
     private:
+        Printer& _prt;
         unsigned int _numVendingMachines;
         unsigned int _numStudents;
-        Printer& _prt;
         vector<VendingMachine*> _machineList;
         vector<int> _studentLocList;
         void main();

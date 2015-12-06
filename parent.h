@@ -1,6 +1,8 @@
 #ifndef _PARENT_H_
 #define _PARENT_H_
 
+#include "printer.h"
+#include "bank.h"
 _Task Parent {
     private:
         unsigned int _numStudents;

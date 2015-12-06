@@ -1,25 +1,25 @@
 #include "bottlingPlant.h"
-#include "truck.h"
+#include "MPRNG.h"
 
-extern MPRNG rmd;
+extern MPRNG rdm;
 
 BottlingPlant::BottlingPlant( Printer &prt, NameServer &nameServer, unsigned int numVendingMachines, unsigned int maxShippedPerFlavour, unsigned int maxStockPerFlavour, unsigned int timeBetweenShipments ) : 
     _prt(prt),
     _nameServer(nameServer),
-    _numVendingNamchines(numVendingMachines),
-    _maxShipingPerFlavour(maxShippingPerFlavour),
+    _numVendingMachines(numVendingMachines),
+    _maxShippedPerFlavour(maxShippedPerFlavour),
     _maxStockPerFlavour(maxStockPerFlavour),
     _timeBetweenShipments(timeBetweenShipments) {}
 
 void BottlingPlant::main(){
+    new Truck(_prt, _nameServer, *this, _numVendingMachines, _maxStockPerFlavour);
     for(;;){
 
-        Truck* truck = new Truck(_prt, _nameServer, &this, _numVendingMachine, _maxStockPerFlavour);
-        unsigned int quantity = rmd(0, _maxShippedPerFlavour);
+        unsigned int quantity = rdm(0, _maxShippedPerFlavour);
         // simulate procution
-        for(int num = 0; num < quantity; num++) {
-            for(int flav = 0; flav < 4; flav++)
-                _prod.push(flav);
+        for(unsigned int num = 0; num < quantity; num++) {
+            for(unsigned int flav = 0; flav < 4; flav++)
+                _prod.push_back(flav);
         }
         
         // Yeild between production run
@@ -33,7 +33,7 @@ void BottlingPlant::main(){
 }
 
 void BottlingPlant::getShipment(unsigned int cargo[]) {
-    if(isDown) throw new Shutdown();
+    if(isDown) _Throw Shutdown();
 
     // transfer item
     for(unsigned int item = 0; item < _prod.size(); item++){

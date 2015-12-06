@@ -1,31 +1,31 @@
 #include "nameServer.h"
 
-NameServer::NameServer( Printer& prt, unsigned int numVendingNamechines, unsigned int numStudents ) : 
+NameServer::NameServer( Printer& prt, unsigned int numVendingMachines, unsigned int numStudents ) : 
        _prt(prt), 
        _numVendingMachines(numVendingMachines),
        _numStudents(numStudents){
        
-           for(int i = 0; i < _numStudents; i++){
-                _studentLocList.push(i % _numVendingMachines);     
+           for(unsigned int i = 0; i < _numStudents; i++){
+                _studentLocList.push_back(i % _numVendingMachines);     
            }
        }
 
 void NameServer::VMregister( VendingMachine* vendingmachine ) {
-    _machineList.push(vendingmachine);
+    _machineList.push_back(vendingmachine);
 }
 
-VendingMachine* getMachine( unsigned int id ) {
+VendingMachine* NameServer::getMachine( unsigned int id ) {
     VendingMachine* machine = _machineList[_studentLocList[id]];
-    _studentLocList[id] = ( studentLocList[id] + 1 ) % _numVendingMachines;
+    _studentLocList[id] = ( _studentLocList[id] + 1 ) % _numVendingMachines;
     return machine;
 }
 
-VendingMachine** getMachineList() {
+VendingMachine** NameServer::getMachineList() {
     return &_machineList[0];
 }
 
 void NameServer::main(){
-    for(int currentVM = 0; currentVM < _numVendingMachines; currentVM ++){
+    for(unsigned int currentVM = 0; currentVM < _numVendingMachines; currentVM ++){
         _Accept(VMregister);
     }
 
