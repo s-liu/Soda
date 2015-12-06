@@ -1,8 +1,7 @@
 #include "vendingMachine.h"
 
 VendingMachine::VendingMachine( Printer &prt, NameServer &nameServer, unsigned int id, unsigned int sodaCost, unsigned int maxStockPerFlavour ) : _printer(prt), _nameServer(nameServer), _id(id), _sodaCost(sodaCost), _maxStockPerFlavour(maxStockPerFlavour), _exception_flag(0) {
-	unsigned int inv [4];
-	_inventory = inv;
+	_inventory = new unsigned int [4];
 	for (unsigned int i = 0; i < 4; i++) {
 		_inventory[i] = 0;
 	}
@@ -54,7 +53,6 @@ void VendingMachine::main() {
 			} else if (_currCard->getBalance() < _sodaCost) {
                 _exception_flag = 2;
 			} else {
-				
                 _currCard->withdraw(_sodaCost);
                 _inventory[_currFlavour] --;
                 _printer.print(Printer::Kind::Vending, _id, 'B', _currFlavour, _inventory[_currFlavour]);

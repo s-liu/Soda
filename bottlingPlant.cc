@@ -43,7 +43,7 @@ void BottlingPlant::getShipment(unsigned int cargo[]) {
 
     // transfer item
     for(unsigned int item = 0; item < 4; item++){
-        cargo[item] = _quantity[4];   
+        cargo[item] = _quantity[item];   
     }
 
     _prt.print(Printer::Kind::BottlingPlant, 'P');

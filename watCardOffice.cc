@@ -4,8 +4,7 @@
 extern MPRNG rdm;
 
 WATCardOffice::WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers ) : _printer(prt), _bank(bank), _numCouriers(numCouriers), _courier_arr(NULL) {
-	Courier* arr [numCouriers];
-	_courier_arr = arr;
+	_courier_arr = new Courier* [numCouriers];
 	for (unsigned int i = 0; i < _numCouriers; i++) {
 		_courier_arr[i] = new Courier(this, &_bank, i);
 	}
