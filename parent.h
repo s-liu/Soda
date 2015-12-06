@@ -4,12 +4,12 @@
 _Task Parent {
     private:
         unsigned int _numStudents;
-        unisgned int _parentalDelay;
+        unsigned int _parentalDelay;
         Printer& _prt;
         Bank& _bank;
         void main();
     public:
         Parent( Printer &prt, Bank &bank, unsigned int numStudents, unsigned int parentalDelay );
-}
+};
 
 #endif

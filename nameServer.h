@@ -2,6 +2,7 @@
 #define _NAMESERVER_H_
 
 #include "vector"
+#include "vendingMachine.h"
 using namespace std;
 
 _Task NameServer {

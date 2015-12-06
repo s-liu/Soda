@@ -1,6 +1,7 @@
 #ifndef _VENDING_MACHINE_H_
 #define _VENDING_MACHINE_H_
 #include "watCard.h"
+#include "nameServer.h"
 
 _Task VendingMachine {
     void main();

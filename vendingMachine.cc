@@ -1,7 +1,7 @@
 #include "vendingMachine.h"
 #include "watCard.cc"
 
-VendingMachine::VendingMachine( Printer &prt, NameServer &nameServer, unsigned int id, unsigned int sodaCost, unsigned int maxStockPerFlavour ) : _printer(prt), _id(id), _sodaCost(sodaCost), _maxStockPerFlavour(maxStockPerFlavour), _exception_flag(0) {
+VendingMachine::VendingMachine( Printer &prt, NameServer &nameServer, unsigned int id, unsigned int sodaCost, unsigned int maxStockPerFlavour ) : _printer(prt), _nameServer(nameServer), _id(id), _sodaCost(sodaCost), _maxStockPerFlavour(maxStockPerFlavour), _exception_flag(0) {
 	unsigned int inv [4];
 	_inventory = inv;
 	for (unsigned int i = 0; i < 4; i++) {
