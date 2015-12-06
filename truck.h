@@ -12,7 +12,9 @@ _Task Truck {
 	unsigned int _maxStockPerFlavour;
 	unsigned int* _cargo;
 	void clear();
+	void empty();
   public:
     Truck( Printer &prt, NameServer &nameServer, BottlingPlant &plant,
            unsigned int numVendingMachines, unsigned int maxStockPerFlavour );
 };
+#endif

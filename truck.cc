@@ -40,8 +40,11 @@ void Truck::main() {
 			}
 			unsigned int* inv = vmList[curr]->inventory();
 			for (unsigned int i = 0; i < 4; i++) {
-				int replenish = min ((maxStockPerFlavour - inv[i]), _cargo[i]);
-			
+				unsigned int replenish = min ((maxStockPerFlavour - inv[i]), _cargo[i]);
+				inv[i] += replenish;
+				_cargo[i] -= replenish;
+			}
+			curr++;
 		}
 	}
 }
