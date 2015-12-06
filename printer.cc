@@ -112,6 +112,7 @@ void Printer::printAll() {
         delete info;
         _infos[index] = NULL;
     }
+	cout << endl;
 }
 
 void Printer::printFinished(unsigned int index) {

@@ -33,6 +33,7 @@ void Truck::main() {
 			_plant.getShipment(_cargo);
 			_printer.print(Printer::Kind::Truck, 'P', total());
 		} catch (BottlingPlant::Shutdown) {
+			clear();
 			_printer.print(Printer::Kind::Truck, 'F');
 			break;
 		}	
