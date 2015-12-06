@@ -9,14 +9,6 @@ VendingMachine::VendingMachine( Printer &prt, NameServer &nameServer, unsigned i
 }
 
 void VendingMachine::buy( VendingMachine::Flavours flavour, WATCard &card ) {
-	/*if (_inventory[flavour] == 0) {
-		_Throw Stock();
-	}
-	if (card.getBalance() < _sodaCost) {
-		_Throw Funds();
-	}
-	card.withdraw(sodaCost );
-	_inventory[flavour] --;*/
 	_currFlavour = flavour;
 	_currCard = &card;
 	_lock.wait();
@@ -27,7 +19,6 @@ void VendingMachine::buy( VendingMachine::Flavours flavour, WATCard &card ) {
 		_exception_flag = 0;
 		_Throw Funds();
 	}
-
 }
 
 unsigned int* VendingMachine::inventory() {
@@ -46,12 +37,17 @@ _Nomutex unsigned int VendingMachine::getId() {
 }
 
 void VendingMachine::main() {
+	_printer.print(Printer::Kind::Vending, _id, 'S', _sodaCost);
 	_nameServer.VMregister(this);
 	for (;;) {
 		_Accept(~VendingMachine) {
+			_printer.print(Printer::Kind::Vending, _id, 'F');
 			break;
 		} or _Accept(inventory) {
-			_Accept(restocked);
+			_printer.print(Printer::Kind::Vending, _id, 'r');
+			_Accept(restocked) {
+				_printer.print(Printer::Kind::Vending, _id, 'R');
+			}
 		} or _Accept(buy) {
 			if (_inventory[_currFlavour] == 0) {
 				_exception_flag = 1;
@@ -60,8 +56,10 @@ void VendingMachine::main() {
 			} else {
 				_currCard->withdraw(_sodaCost);
 				_inventory[_currFlavour] --;
+				_printer.print(Printer::Kind::Vending, _id, 'B', _currFlavour, _inventory[_currFlavour]);
 			}
 			_lock.signalBlock();
 		}
 	}
 }
+

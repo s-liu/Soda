@@ -24,9 +24,10 @@ _Task WATCardOffice {
     _Task Courier {
         WATCardOffice* _office;
         Bank* _bank;
+		unsigned int _id;
         void main();
       public:
-        Courier(WATCardOffice* office, Bank* bank) : _office(office), _bank(bank){}
+        Courier(WATCardOffice* office, Bank* bank, unsigned int id) : _office(office), _bank(bank), _id(id) {}
 	};                 // communicates with bank
 
     void main();

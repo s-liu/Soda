@@ -15,22 +15,25 @@ void Truck::clear() {
 	}
 }
 
-bool Truck::empty() {
+unsigned Truck::total() {
 	int sum = 0;
 	for (unsigned int i = 0; i < 4; i ++ ) {
 		sum += _cargo[i];
 	}
-	return (sum == 0);
+	return sum;
 }
 	
 	
 void Truck::main() {
+	_printer.print(Printer::Kind::Truck, 'S');
 	VendingMachine** vmList = _nameServer.getMachineList();
 	for (;;) {
 		try {
 			yield(rdm(1,10));
 			_plant.getShipment(_cargo);
+			_printer.print(Printer::Kind::Truck, 'P', total());
 		} catch (BottlingPlant::Shutdown) {
+			_printer.print(Printer::Kind::Truck, 'F');
 			break;
 		}	
 		unsigned int curr = 0;
@@ -38,15 +41,22 @@ void Truck::main() {
 			if (curr == _numVendingMachines) {
 				curr = 0;
 				break;
-			} else if (empty()) {
+			} else if (total() == 0) {
 				break;
 			}
+			_printer.print(Printer::Kind::Truck, 'd', vmList[curr]->getId(), total());
 			unsigned int* inv = vmList[curr]->inventory();
+			unsigned int total_not_replenished = 0;
 			for (unsigned int i = 0; i < 4; i++) {
 				unsigned int replenish = min ((_maxStockPerFlavour - inv[i]), _cargo[i]);
 				inv[i] += replenish;
 				_cargo[i] -= replenish;
+				total_not_replenished += _maxStockPerFlavour - inv[i];
 			}
+			if (total_not_replenished > 0) {
+				_printer.print(Printer::Kind::Truck, 'U', vmList[curr]->getId(), total_not_replenished);
+			}
+			_printer.print(Printer::Kind::Truck, 'D', vmList[curr]->getId(), total());
 			curr++;
 		}
 	}

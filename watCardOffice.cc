@@ -7,7 +7,7 @@ WATCardOffice::WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers
 	Courier* arr [numCouriers];
 	_courier_arr = arr;
 	for (unsigned int i = 0; i < _numCouriers; i++) {
-		_courier_arr[i] = new Courier(this, &_bank);
+		_courier_arr[i] = new Courier(this, &_bank, i);
 	}
 }
 
@@ -40,22 +40,39 @@ WATCardOffice::Job* WATCardOffice::requestWork() {
 }
 
 void WATCardOffice::main() {
+	_printer.print(Printer::Kind::WATCardOffice, 'S');
 	for (;;) {
 		_Accept( ~WATCardOffice ) {
+			_printer.print(Printer::Kind::WATCardOffice, 'F');
 			break;
 		} or _When(!_job_list.empty()) _Accept(requestWork) {
-		} or _Accept( create, transfer ) {
+			_printer.print(Printer::Kind::WATCardOffice, 'W');
+		} or _Accept( create ) {
+			_printer.print(Printer::Kind::WATCardOffice, 'C', _job_list.back()->args.sid, _job_list.back()->args.amount);
+		} or _Accept( transfer ) {
+			_printer.print(Printer::Kind::WATCardOffice, 'T', _job_list.back()->args.sid, _job_list.back()->args.amount);
 		}
 	}
 }
 
 void WATCardOffice::Courier::main() {
+	_office->_printer.print(Printer::Kind::Courier, _id, 'S');
 	for (;;) {
-		Job* job = _office->requestWork();
-		if (rdm(1,6)==1) job->result.exception(new Lost());
-		Args a = job->args;
-		_bank->withdraw(a.sid, a.amount);
-		a.card->deposit(a.amount);
-		job->result.delivery(a.card);
+		_Accept( ~Courier ) {
+			_office->_printer.print(Printer::Kind::Courier, _id, 'F');
+			break;
+		} _Else {
+			Job* job = _office->requestWork();
+			Args a = job->args;
+			_office->_printer.print(Printer::Kind::Courier, _id, 't', a.sid, a.amount);
+			_bank->withdraw(a.sid, a.amount);
+			a.card->deposit(a.amount);
+			_office->_printer.print(Printer::Kind::Courier, _id, 'T', a.sid, a.amount);
+			if (rdm(1,6)==1) {
+				job->result.exception(new Lost());
+			} else {
+				job->result.delivery(a.card);
+			}
+		}
 	}
 }
