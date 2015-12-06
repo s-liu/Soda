@@ -30,7 +30,7 @@ _Task WATCardOffice {
 	Bank &_bank;
 	unsigned int _numCouriers;
 	Courier** _courier_arr;
-	queue<Job> _job_list;
+	queue<*Job> _job_list;
 	
   public:
     _Event Lost {};                        // lost WATCard

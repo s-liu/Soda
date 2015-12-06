@@ -21,22 +21,22 @@ WATCardOffice::~WATCardOffice() {
 		
 WATCard::FWATCard WATCardOffice::create( unsigned int sid, unsigned int amount ) {
 	Args a (sid, amount, new WATCard());
-	Job job (a);
-	_job_list.push(a);
-	return job.result;
+	Job* job  = new Job(a);
+	_job_list.push(job);
+	return job->result;
 }
 
 WATCard::FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount, WATCard * card ) {
 	Args a (sid, amount, card);
-	Job job (a);
-	_job_list.push(a);
-	return job.result;
+	Job* job  = new Job(a);
+	_job_list.push(job);
+	return job->result;
 }
 
 WATCardOffice::Job* WATCardOffice::requestWork() {
-	Job job = _job_list.front();
+	Job* job = _job_list.front();
     _job_list.pop();
-    return &job;
+    return job;
 }
 
 void WATCardOffice::main() {
