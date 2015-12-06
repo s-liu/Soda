@@ -10,18 +10,18 @@ void Student::main() {
 	unsigned int purchase = rdm(1,_maxPurchases);
 	unsigned int flavour = rdm(3);
 	unsigned int currPurchase = 0;
-	_printer.print(Printer::Kind::Student, 'S', flavour, purchase);
+	_printer.print(Printer::Kind::Student, _id, 'S', flavour, purchase);
 	// create watCard with $5 balance and a gift card
 	WATCard *watCard = NULL;
 	WATCard *giftCard = NULL;
     WATCard::FWATCard fWatCard = _cardOffice.create(_id, 5);
     WATCard::FWATCard fGiftCard = _groupoff.giftCard();
 	VendingMachine* vMachine = _nameServer.getMachine(_id);
-	_printer.print(Printer::Kind::Student, 'V', vMachine->getId());
+	_printer.print(Printer::Kind::Student, _id, 'V', vMachine->getId());
 
 	for (;;) {
 		if (currPurchase == purchase) {
-			_printer.print(Printer::Kind::Student, 'F');
+			_printer.print(Printer::Kind::Student, _id, 'F');
 			break;
 		}
 		try {
@@ -30,18 +30,18 @@ void Student::main() {
 				// yield
 				yield(rdm(1,10));
 				vMachine->buy(static_cast<VendingMachine::Flavours>(flavour), *watCard);
-				_printer.print(Printer::Kind::Student, 'B', watCard->getBalance());
+				_printer.print(Printer::Kind::Student, _id, 'B', watCard->getBalance());
 			} or _Select(fGiftCard) {
 				giftCard = fGiftCard();
 				// yield
 				yield(rdm(1,10));
 				vMachine->buy(static_cast<VendingMachine::Flavours>(flavour), *giftCard); 
-				_printer.print(Printer::Kind::Student, 'G', giftCard->getBalance());
+				_printer.print(Printer::Kind::Student, _id, 'G', giftCard->getBalance());
 				fGiftCard.reset();
 			}
 			currPurchase++;
 		} catch (WATCardOffice::Lost &e) {
-			_printer.print(Printer::Kind::Student, 'L');
+			_printer.print(Printer::Kind::Student, _id, 'L');
 			fWatCard.reset();
 			fWatCard = _cardOffice.create(_id, 5);
 		} catch (VendingMachine::Funds &e) {
