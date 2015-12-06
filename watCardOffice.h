@@ -5,6 +5,7 @@
 #include "watCard.h"
 #include "bank.h"
 #include <queue>
+#include "printer.h"
 
 _Task WATCardOffice {
 	struct Args {
@@ -37,5 +38,6 @@ _Task WATCardOffice {
     WATCard::FWATCard create( unsigned int sid, unsigned int amount );
     WATCard::FWATCard transfer( unsigned int sid, unsigned int amount, WATCard *card );
     Job *requestWork();
+    ~WATCardOffice();
 };
 #endif

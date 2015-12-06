@@ -1,4 +1,5 @@
 #include "groupoff.h"
+#include "watCard.h"
 #include "MPRNG.h"
 
 MPRNG rdm;
@@ -6,7 +7,7 @@ MPRNG rdm;
 Groupoff::Groupoff( Printer &prt, unsigned int numStudents, unsigned int sodaCost, unsigned int groupoffDelay ) : _printer(prt), _numStudents(numStudents), _sodaCost(sodaCost), _groupoffDelay(groupoffDelay) {}
 
 void Groupoff::main() {
-	int count = 0;
+	unsigned int count = 0;
 	for(;;) {
 		if (count == _numStudents) break;
 		_Accept(giftCard) {
@@ -19,7 +20,7 @@ void Groupoff::main() {
 		} _Else {
 			if (_cards.empty()) break;
 			yield(_groupoffDelay);
-			WatCard* giftCard = new WATCard();
+			WATCard* giftCard = new WATCard();
 			giftCard->deposit(_sodaCost);
 			unsigned randomIndex = rdm(_cards.size()-1);
 			_cards[randomIndex].delivery(giftCard);		

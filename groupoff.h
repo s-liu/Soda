@@ -2,6 +2,7 @@
 #define _GROUPOFF_H_
 
 #include "watCard.h"
+#include "printer.h"
 #include <vector>
 
 _Task Groupoff {

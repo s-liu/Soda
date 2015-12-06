@@ -1,18 +1,18 @@
 #include "watCardOffice.h"
 #include "MPRNG.h"
 
-MPRNG rdm;
+extern MPRNG rdm;
 
 WATCardOffice::WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers ) : _printer(prt), _bank(bank), _numCouriers(numCouriers), _courier_arr(NULL) {
 	Courier* arr [numCouriers];
 	_courier_arr = arr;
-	for (unsigned int i = 0; i < numCouriers; i++) {
+	for (unsigned int i = 0; i < _numCouriers; i++) {
 		_courier_arr[i] = new Courier();
 	}
 }
 
 WATCardOffice::~WATCardOffice() {
-	for (unsigned int i = 0; i < numCouriers; i++) {
+	for (unsigned int i = 0; i < _numCouriers; i++) {
 		delete _courier_arr[i];
 	}
 	delete [] _courier_arr;
@@ -34,10 +34,12 @@ WATCard::FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount
 }
 
 WATCardOffice::Job* WATCardOffice::requestWork() {
-	return &_job_list.pop();
+	Job job = _job_list.front();
+    _job_list.pop();
+    return &job;
 }
 
-WATCardOffice::main() {
+void WATCardOffice::main() {
 	for (;;) {
 		_Accept( ~WATCardOffice ) {
 			break;
@@ -47,7 +49,7 @@ WATCardOffice::main() {
 	}
 }
 
-Courier::main() {
+void WATCardOffice::Courier::main() {
 	for (;;) {
 		Job* job = requestWork();
 		if (rdm(1,6)==1) job->result.exception(new Lost());
