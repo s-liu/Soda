@@ -18,14 +18,8 @@ void BottlingPlant::main(){
     new Truck(_prt, _nameServer, *this, _numVendingMachines, _maxStockPerFlavour);
     for(;;){
 
-        unsigned int quantity = rdm(0, _maxShippedPerFlavour);
-        // simulate procution
-        for (unsigned int num = 0; num < quantity; num++) {
-            for (unsigned int flav = 0; flav < 4; flav++) {
-                _prod.push_back(flav);
-			}
-        }
-        _prt.print(Printer::Kind::BottlingPlant, 'G', quantity);
+        _quantity = rdm(0, _maxShippedPerFlavour);
+        _prt.print(Printer::Kind::BottlingPlant, 'G', _quantity);
         
         // Yeild between production run
         yield(_timeBetweenShipments);
@@ -44,8 +38,8 @@ void BottlingPlant::getShipment(unsigned int cargo[]) {
     if(isDown) _Throw Shutdown();
 
     // transfer item
-    for(unsigned int item = 0; item < _prod.size(); item++){
-        cargo[item] = _prod[item];    
+    for(unsigned int item = 0; item < 4; item++){
+        cargo[item] = _quantity;   
     }
 
     _prt.print(Printer::Kind::BottlingPlant, 'P');
