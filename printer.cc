@@ -46,7 +46,7 @@ void Printer::printAll() {
             if(info -> state == 'S' || info -> state == 'F') {
                 cout << info -> state;
             } else if (info -> state == 'D') {
-                cout << info -> state << info -> lid << info -> value1;
+                cout << info -> state << info -> lid << ',' << info -> value1;
             }
         } else if(info -> kind == Kind::Groupoff) {
             if(info -> state == 'S' || info -> state == 'F') {
@@ -58,13 +58,13 @@ void Printer::printAll() {
             if(info -> state == 'S' || info -> state == 'W' || info -> state == 'F') {
                 cout << info -> state;
             } else if (info -> state == 'C' || info -> state == 'T') {
-                cout << info -> state << info -> lid << info -> value1;
+                cout << info -> state << info -> lid <<','<< info -> value1;
             }
         } else if(info -> kind == Kind::NameServer) {
             if(info -> state == 'S' || info -> state == 'F') {
                 cout << info -> state;
             } else if (info -> state == 'N') {
-                cout << info -> state << info -> lid << info -> value1;
+                cout << info -> state << info -> lid << ',' << info -> value1;
             } else if (info -> state == 'R') {
                 cout << info -> state << info -> lid;
             }
@@ -72,7 +72,7 @@ void Printer::printAll() {
             if(info -> state == 'S' || info -> state == 'F') {
                  cout << info -> state;
             } else if (info -> state == 'd' || info -> state == 'U' || info -> state == 'D') {
-                cout << info -> state << info -> lid << info -> value1;
+                cout << info -> state << info -> lid <<','<< info -> value1;
             } else if (info -> state == 'P') {
                 cout << info -> state << info -> value1;
             }
@@ -88,13 +88,13 @@ void Printer::printAll() {
             } else if (info -> state == 'V') {
                 cout << info -> state << info -> lid;
             } else if (info -> state == 'S') {
-                cout << info -> state << info -> value1 << info -> value2 ;
+                cout << info -> state << info -> value1 <<','<< info -> value2 ;
             } 
         } else if(info -> kind == Kind::Vending) {
             if(info -> state == 'r' || info -> state == 'F' || info -> state == 'R') {
                 cout << info -> state;
             } else if (info -> state == 'B') {
-                cout << info -> state << info -> value1 << info -> value2;
+                cout << info -> state << info -> value1 <<','<< info -> value2;
             } else if (info -> state == 'S') {
                 cout << info -> state << info -> value1;
             }
@@ -102,7 +102,7 @@ void Printer::printAll() {
             if(info -> state == 'S' || info -> state == 'F') {
                 cout << info -> state;
             } else if (info -> state == 't' || info -> state == 'T') {
-                cout << info -> state << info -> lid << info -> value1;
+                cout << info -> state << info -> value1 <<','<< info -> value2;
             }
         }
 
@@ -196,6 +196,7 @@ void Printer::print( Kind kind, unsigned int lid, char state ){
     Info* info = new Info();
     info -> kind = kind;
     info -> state = state;
+    info -> lid = lid;
     _infos[index] = info;
 }
 
@@ -214,6 +215,7 @@ void Printer::print( Kind kind, unsigned int lid, char state, int value1 ){
     info -> kind = kind;
     info -> state = state;
     info -> value1 = value1;
+    info -> lid = lid;
     _infos[index] = info;
 }
 
@@ -233,5 +235,6 @@ void Printer::print( Kind kind, unsigned int lid, char state, int value1, int va
     info -> state = state;
     info -> value1 = value1;
     info -> value2 = value2;
+    info -> lid = lid;
     _infos[index] = info;
 }
