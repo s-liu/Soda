@@ -1,9 +1,11 @@
 #ifndef _NAMESERVER_H_
 #define _NAMESERVER_H_
 
-#include "vector"
+#include <vector>
 #include "vendingMachine.h"
 using namespace std;
+
+_Task VendingMachine;
 
 _Task NameServer {
     private:

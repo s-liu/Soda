@@ -3,6 +3,8 @@
 #include "watCard.h"
 #include "nameServer.h"
 
+_Task NameServer;
+
 _Task VendingMachine {
     void main();
 	Printer &_printer;
