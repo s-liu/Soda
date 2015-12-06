@@ -128,6 +128,7 @@ void uMain::main() {
 		vMachine_arr[i] = new VendingMachine(printer, nameServer, i, c.sodaCost, c.maxStockPerFlavour);
 	}
 	BottlingPlant* bottlingPlant = new BottlingPlant(printer, nameServer, c.numVendingMachines, c.maxShippedPerFlavour, c.maxStockPerFlavour, c.timeBetweenShipments);
+	//BottlingPlant bottlingPlant (printer, nameServer, c.numVendingMachines, c.maxShippedPerFlavour, c.maxStockPerFlavour, c.timeBetweenShipments);
 	Student* student_arr[c.numStudents];
 	for (unsigned int i = 0; i < c.numStudents; i++) {
 		student_arr[i] = new Student(printer, nameServer, cardOffice, groupoff, i, c.maxPurchases);

@@ -20,9 +20,10 @@ void BottlingPlant::main(){
 
         unsigned int quantity = rdm(0, _maxShippedPerFlavour);
         // simulate procution
-        for(unsigned int num = 0; num < quantity; num++) {
-            for(unsigned int flav = 0; flav < 4; flav++)
+        for (unsigned int num = 0; num < quantity; num++) {
+            for (unsigned int flav = 0; flav < 4; flav++) {
                 _prod.push_back(flav);
+			}
         }
         _prt.print(Printer::Kind::BottlingPlant, 'G', quantity);
         
