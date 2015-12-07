@@ -140,7 +140,7 @@ void uMain::main() {
 	}
 	delete bottlingPlant;
 
-	for (unsigned int i = 0; i < c.numStudents; i++) {
+	for (unsigned int i = 0; i < c.numVendingMachines; i++) {
 		delete vMachine_arr[i];
 	}
 }
