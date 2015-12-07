@@ -64,7 +64,7 @@ void Printer::printAll() {
             if(info -> state == 'S') {
                 cout << info -> state;
             } else if (info -> state == 'N') {
-                cout << info -> state << info -> lid << ',' << info -> value1;
+                cout << info -> state << info -> value1 << ',' << info -> value2;
             } else if (info -> state == 'R') {
                 cout << info -> state << info -> lid;
             }
@@ -134,6 +134,7 @@ void Printer::printFinished(unsigned int index) {
         for(unsigned int i = 0; i < _infos.size(); i++) {
             delete _infos[i];
         }
+        cout << "***********************"<<endl;
     }
 }
 
