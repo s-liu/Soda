@@ -72,6 +72,7 @@ void WATCardOffice::Courier::main() {
 			a.card->deposit(a.amount);
 			_office->_printer.print(Printer::Kind::Courier, _id, 'T', a.sid, a.amount);
 			if (rdm(1,6)==1) {
+				delete a.card;
 				job->result.exception(new Lost());
 			} else {
 				job->result.delivery(a.card);
