@@ -9,7 +9,9 @@ BottlingPlant::BottlingPlant( Printer &prt, NameServer &nameServer, unsigned int
     _numVendingMachines(numVendingMachines),
     _maxShippedPerFlavour(maxShippedPerFlavour),
     _maxStockPerFlavour(maxStockPerFlavour),
-    _timeBetweenShipments(timeBetweenShipments) {}
+    _timeBetweenShipments(timeBetweenShipments) {
+        _quantity = new unsigned int[4];
+    }
 
 void BottlingPlant::main(){
 
@@ -42,6 +44,7 @@ void BottlingPlant::main(){
 
     // End
     _prt.print(Printer::Kind::BottlingPlant, 'F');
+    delete[] _quantity;
 }
 
 void BottlingPlant::getShipment(unsigned int cargo[]) {

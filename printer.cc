@@ -118,6 +118,7 @@ void Printer::printAll() {
 }
 
 void Printer::printFinished(unsigned int index) {
+    numCompleted ++;
     printAll();
     for(unsigned int i = 0; i < _infos.size(); i++) {
         if(i == index) {
@@ -128,6 +129,12 @@ void Printer::printFinished(unsigned int index) {
         cout << "\t";
     }
     cout << endl;
+
+    if(numCompleted == _infos.size()){
+        for(unsigned int i = 0; i < _infos.size(); i++) {
+            delete _infos[i];
+        }
+    }
 }
 
 void Printer::print( Kind kind, char state ){

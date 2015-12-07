@@ -35,6 +35,7 @@ _Monitor Printer {
         void printAll();
         unsigned int getIndex(Kind kind, unsigned int lid);
         void printFinished(unsigned int index);
+        unsigned int numCompleted = 0;
 };
 
 #endif
