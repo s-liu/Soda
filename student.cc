@@ -16,6 +16,7 @@ void Student::main() {
 	WATCard *giftCard = NULL;
     WATCard::FWATCard fWatCard = _cardOffice.create(_id, 5);
     WATCard::FWATCard fGiftCard = _groupoff.giftCard();
+	bool giftCardUsed = false;
 	VendingMachine* vMachine = _nameServer.getMachine(_id);
 	_printer.print(Printer::Kind::Student, _id, 'V', vMachine->getId());
 
@@ -36,7 +37,9 @@ void Student::main() {
 				yield(rdm(1,10));
 				vMachine->buy(static_cast<VendingMachine::Flavours>(flavour), *giftCard); 
 				_printer.print(Printer::Kind::Student, _id, 'G', giftCard->getBalance());
+				giftCardUsed = true;
 				fGiftCard.reset();
+				delete giftCard;
 			}
 			currPurchase++;
 		} catch (WATCardOffice::Lost &e) {
@@ -47,9 +50,17 @@ void Student::main() {
 			fWatCard = _cardOffice.transfer(_id, 5 + vMachine->cost(), watCard);
 		} catch (VendingMachine::Stock &e) {
 			vMachine = _nameServer.getMachine(_id);
+			_printer.print(Printer::Kind::Student, _id, 'V', vMachine->getId());
 		}
 	}
 	_printer.print(Printer::Kind::Student, _id, 'F');
-	delete watCard;
-	delete giftCard;
+
+	if (!giftCardUsed) {
+		delete fGiftCard();
+	}
+	try{
+       delete fWatCard();
+    } catch (WATCardOffice::Lost &e){
+		//dont need to do anything if lost
+    }
 }
