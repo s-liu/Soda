@@ -15,7 +15,7 @@ void BottlingPlant::main(){
 
     // Start
     _prt.print(Printer::Kind::BottlingPlant, 'S');
-    new Truck(_prt, _nameServer, *this, _numVendingMachines, _maxStockPerFlavour);
+    Truck t (_prt, _nameServer, *this, _numVendingMachines, _maxStockPerFlavour);
     for(;;){
         unsigned int totalGen = 0;
         for(int i = 0; i < 4; i++) {

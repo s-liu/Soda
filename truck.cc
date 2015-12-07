@@ -32,9 +32,7 @@ void Truck::main() {
 			_plant.getShipment(_cargo);
 			_printer.print(Printer::Kind::Truck, 'P', total());
 		} catch (BottlingPlant::Shutdown) {
-			cout << "caught shutdown exception" << endl;
 			clear();
-			_printer.print(Printer::Kind::Truck, 'F');
 			break;
 		}	
 		unsigned int curr = 0;
@@ -62,4 +60,5 @@ void Truck::main() {
 			curr++;
 		}
 	}
+	_printer.print(Printer::Kind::Truck, 'F');
 }

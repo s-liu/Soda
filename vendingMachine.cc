@@ -40,7 +40,6 @@ void VendingMachine::main() {
 	_nameServer.VMregister(this);
 	for (;;) {
         _Accept(~VendingMachine) {
-			_printer.print(Printer::Kind::Vending, _id, 'F');
 			break;
 		} or _Accept(inventory) {
 			_printer.print(Printer::Kind::Vending, _id, 'r');
@@ -61,5 +60,6 @@ void VendingMachine::main() {
             _lock.signalBlock();
 		}
 	}
+	_printer.print(Printer::Kind::Vending, _id, 'F');
 }
 

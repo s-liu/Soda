@@ -11,11 +11,8 @@ WATCardOffice::WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers
 }
 
 WATCardOffice::~WATCardOffice() {
-	cout << "wat card office destructor" << endl;
 	for (unsigned int i = 0; i < _numCouriers; i++) {
-		cout << "try to delete courier" << endl;
 		delete _courier_arr[i];
-		cout << "done delete courier" << endl;
 	}
 	delete [] _courier_arr;
 }
@@ -36,6 +33,7 @@ WATCard::FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount
 }
 
 WATCardOffice::Job* WATCardOffice::requestWork() {
+	if (_job_list.empty()) return NULL;
 	Job* job = _job_list.front();
     _job_list.pop();
     return job;
@@ -45,7 +43,9 @@ void WATCardOffice::main() {
 	_printer.print(Printer::Kind::WATCardOffice, 'S');
 	for (;;) {
 		_Accept( ~WATCardOffice ) {
-			_printer.print(Printer::Kind::WATCardOffice, 'F');
+			for (unsigned int i = 0; i < _numCouriers; i++ ) {
+				_Accept(requestWork);
+			}
 			break;
 		} or _When(!_job_list.empty()) _Accept(requestWork) {
 			_printer.print(Printer::Kind::WATCardOffice, 'W');
@@ -55,19 +55,17 @@ void WATCardOffice::main() {
 			_printer.print(Printer::Kind::WATCardOffice, 'T', _job_list.back()->args.sid, _job_list.back()->args.amount);
 		}
 	}
+	_printer.print(Printer::Kind::WATCardOffice, 'F');
 }
 
 void WATCardOffice::Courier::main() {
 	_office->_printer.print(Printer::Kind::Courier, _id, 'S');
 	for (;;) {
-		cout << "entering the loop" << endl;
 		_Accept( ~Courier ) {
-			cout << "caught destructor" << endl;
-			_office->_printer.print(Printer::Kind::Courier, _id, 'F');
 			break;
 		} _Else {
-			cout << "elseeeee" << endl;
 			Job* job = _office->requestWork();
+			if (job == NULL) break;
 			Args a = job->args;
 			_office->_printer.print(Printer::Kind::Courier, _id, 't', a.sid, a.amount);
 			_bank->withdraw(a.sid, a.amount);
@@ -78,6 +76,8 @@ void WATCardOffice::Courier::main() {
 			} else {
 				job->result.delivery(a.card);
 			}
+			delete job;
 		}
 	}
+	_office->_printer.print(Printer::Kind::Courier, _id, 'F');
 }
