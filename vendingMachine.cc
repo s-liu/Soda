@@ -7,6 +7,10 @@ VendingMachine::VendingMachine( Printer &prt, NameServer &nameServer, unsigned i
 	}
 }
 
+VendingMachine::~VendingMachine() {
+	delete [] _inventory;
+}
+
 void VendingMachine::buy( VendingMachine::Flavours flavour, WATCard &card ) {
 	_currFlavour = flavour;
 	_currCard = &card;
