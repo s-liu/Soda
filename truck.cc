@@ -8,6 +8,10 @@ Truck::Truck( Printer &prt, NameServer &nameServer, BottlingPlant &plant, unsign
 	clear();
 }
 
+Truck::~Truck() {
+	delete [] _cargo;
+}
+
 void Truck::clear() {
 	for (unsigned int i = 0; i < 4; i ++ ) {
 		_cargo[i] = 0;
