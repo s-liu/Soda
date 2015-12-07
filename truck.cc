@@ -30,6 +30,7 @@ unsigned Truck::total() {
 void Truck::main() {
 	_printer.print(Printer::Kind::Truck, 'S');
 	VendingMachine** vmList = _nameServer.getMachineList();
+	unsigned int curr = 0;
 	for (;;) {
 		try {
 			yield(rdm(1,10));
@@ -39,7 +40,6 @@ void Truck::main() {
 			clear();
 			break;
 		}	
-		unsigned int curr = 0;
 		for (;;) {
 			if (curr == _numVendingMachines) {
 				curr = 0;
