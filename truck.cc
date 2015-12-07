@@ -43,7 +43,7 @@ void Truck::main() {
 			} else if (total() == 0) {
 				break;
 			}
-			_printer.print(Printer::Kind::Truck, 'd', vmList[curr]->getId(), total());
+			_printer.print(Printer::Kind::Truck, vmList[curr]->getId(), 'd', total());
 			unsigned int* inv = vmList[curr]->inventory();
 			unsigned int total_not_replenished = 0;
 			for (unsigned int i = 0; i < 4; i++) {
@@ -53,9 +53,9 @@ void Truck::main() {
 				total_not_replenished += _maxStockPerFlavour - inv[i];
 			}
 			if (total_not_replenished > 0) {
-				_printer.print(Printer::Kind::Truck, 'U', vmList[curr]->getId(), total_not_replenished);
+				_printer.print(Printer::Kind::Truck, vmList[curr]->getId(),'U',  total_not_replenished);
 			}
-			_printer.print(Printer::Kind::Truck, 'D', vmList[curr]->getId(), total());
+			_printer.print(Printer::Kind::Truck, vmList[curr]->getId(), 'D', total());
 			vmList[curr]->restocked();
 			curr++;
 		}

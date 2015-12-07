@@ -36,7 +36,9 @@ void BottlingPlant::main(){
 				_Accept(getShipment) {
 					break;
 				}
-			} or _Accept(getShipment);
+			} or _Accept(getShipment){
+                _prt.print(Printer::Kind::BottlingPlant, 'P');
+            }
 		} catch (uMutexFailure::RendezvousFailure) {
 			break;
 		}
@@ -54,6 +56,4 @@ void BottlingPlant::getShipment(unsigned int cargo[]) {
     for(unsigned int item = 0; item < 4; item++){
         cargo[item] = _quantity[item];   
     }
-
-    _prt.print(Printer::Kind::BottlingPlant, 'P');
 }
