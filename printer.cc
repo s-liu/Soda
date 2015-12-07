@@ -89,7 +89,9 @@ void Printer::printAll() {
                 cout << info -> state << info -> lid;
             } else if (info -> state == 'S') {
                 cout << info -> state << info -> value1 <<','<< info -> value2 ;
-            } 
+            } else if(info->state =='B' || info->state == 'G') {
+                cout << info->state << info->value1;
+            }
         } else if(info -> kind == Kind::Vending) {
             if(info -> state == 'r' || info -> state == 'F' || info -> state == 'R') {
                 cout << info -> state;
