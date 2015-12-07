@@ -21,7 +21,6 @@ void Student::main() {
 
 	for (;;) {
 		if (currPurchase == purchase) {
-			_printer.print(Printer::Kind::Student, _id, 'F');
 			break;
 		}
 		try {
@@ -45,9 +44,12 @@ void Student::main() {
 			fWatCard.reset();
 			fWatCard = _cardOffice.create(_id, 5);
 		} catch (VendingMachine::Funds &e) {
-			_cardOffice.transfer(_id, 5 + vMachine->cost(), watCard);
+			fWatCard = _cardOffice.transfer(_id, 5 + vMachine->cost(), watCard);
 		} catch (VendingMachine::Stock &e) {
 			vMachine = _nameServer.getMachine(_id);
 		}
 	}
+	_printer.print(Printer::Kind::Student, _id, 'F');
+	delete watCard;
+	delete giftCard;
 }
