@@ -50,9 +50,9 @@ void WATCardOffice::main() {
 		} or _When(!_job_list.empty()) _Accept(requestWork) {
 			_printer.print(Printer::Kind::WATCardOffice, 'W');
 		} or _Accept( create ) {
-			_printer.print(Printer::Kind::WATCardOffice, 'C', _job_list.back()->args.sid, _job_list.back()->args.amount);
+			_printer.print(Printer::Kind::WATCardOffice, _job_list.back()->args.sid, 'C', _job_list.back()->args.amount);
 		} or _Accept( transfer ) {
-			_printer.print(Printer::Kind::WATCardOffice, 'T', _job_list.back()->args.sid, _job_list.back()->args.amount);
+			_printer.print(Printer::Kind::WATCardOffice, _job_list.back()->args.sid, 'T', _job_list.back()->args.amount);
 		}
 	}
 	_printer.print(Printer::Kind::WATCardOffice, 'F');
