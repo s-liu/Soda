@@ -20,7 +20,7 @@ Printer::Printer( unsigned int numStudents, unsigned int numVendingMachines, uns
         cout << endl;
     }
 
-unsigned int Printer::getIndex(Kind kind) {
+unsigned int Printer::getIndex(Kind kind, unsigned int lid) {
     switch(kind){
         case Kind::Parent: return 0;
         case Kind::Groupoff: return 1;
@@ -28,9 +28,9 @@ unsigned int Printer::getIndex(Kind kind) {
         case Kind::NameServer: return 3;
         case Kind::Truck: return 4;
         case Kind::BottlingPlant: return 5;
-        case Kind::Student: return 6;
-        case Kind::Vending: return 6 + _numStudents;
-        case Kind::Courier: return 6 + _numStudents + _numVendingMachines;
+        case Kind::Student: return 6 + lid;
+        case Kind::Vending: return 6 + _numStudents + lid;
+        case Kind::Courier: return 6 + _numStudents + _numVendingMachines + lid;
     }
     return 404; // Should not reach here
 }
@@ -43,13 +43,13 @@ void Printer::printAll() {
             continue;
         }
         if(info -> kind == Kind::Parent) {
-            if(info -> state == 'S' || info -> state == 'F') {
+            if(info -> state == 'S') {
                 cout << info -> state;
             } else if (info -> state == 'D') {
                 cout << info -> state << info -> lid << ',' << info -> value1;
             }
         } else if(info -> kind == Kind::Groupoff) {
-            if(info -> state == 'S' || info -> state == 'F') {
+            if(info -> state == 'S') {
                 cout << info -> state;
             } else if (info -> state == 'D') {
                 cout << info -> state << info -> value1;
@@ -61,7 +61,7 @@ void Printer::printAll() {
                 cout << info -> state << info -> lid <<','<< info -> value1;
             }
         } else if(info -> kind == Kind::NameServer) {
-            if(info -> state == 'S' || info -> state == 'F') {
+            if(info -> state == 'S') {
                 cout << info -> state;
             } else if (info -> state == 'N') {
                 cout << info -> state << info -> lid << ',' << info -> value1;
@@ -69,7 +69,7 @@ void Printer::printAll() {
                 cout << info -> state << info -> lid;
             }
         } else if(info -> kind == Kind::Truck) {
-            if(info -> state == 'S' || info -> state == 'F') {
+            if(info -> state == 'S') {
                  cout << info -> state;
             } else if (info -> state == 'd' || info -> state == 'U' || info -> state == 'D') {
                 cout << info -> state << info -> lid <<','<< info -> value1;
@@ -77,13 +77,13 @@ void Printer::printAll() {
                 cout << info -> state << info -> value1;
             }
         } else if(info -> kind == Kind::BottlingPlant) {
-            if(info -> state == 'S' || info -> state == 'F' || info -> state == 'P') {
+            if(info -> state == 'S'|| info -> state == 'P') {
                 cout << info -> state;
             } else if (info -> state == 'G') {
                 cout << info -> state << info -> value1;
             }
         } else if(info -> kind == Kind::Student) {
-            if(info -> state == 'L' || info -> state == 'F') {
+            if(info -> state == 'L') {
                 cout << info -> state;
             } else if (info -> state == 'V') {
                 cout << info -> state << info -> lid;
@@ -93,7 +93,7 @@ void Printer::printAll() {
                 cout << info->state << info->value1;
             }
         } else if(info -> kind == Kind::Vending) {
-            if(info -> state == 'r' || info -> state == 'F' || info -> state == 'R') {
+            if(info -> state == 'r' || info -> state == 'R') {
                 cout << info -> state;
             } else if (info -> state == 'B') {
                 cout << info -> state << info -> value1 <<','<< info -> value2;
@@ -101,7 +101,7 @@ void Printer::printAll() {
                 cout << info -> state << info -> value1;
             }
         } else if(info -> kind == Kind::Courier) {
-            if(info -> state == 'S' || info -> state == 'F') {
+            if(info -> state == 'S') {
                 cout << info -> state;
             } else if (info -> state == 't' || info -> state == 'T') {
                 cout << info -> state << info -> value1 <<','<< info -> value2;
@@ -131,7 +131,7 @@ void Printer::printFinished(unsigned int index) {
 }
 
 void Printer::print( Kind kind, char state ){
-    unsigned int index = getIndex(kind);
+    unsigned int index = getIndex(kind, 0);
     if(state == 'F') {
         printFinished(index);
         return;
@@ -148,7 +148,7 @@ void Printer::print( Kind kind, char state ){
 }
 
 void Printer::print( Kind kind, char state, int value1 ){
-    unsigned int index = getIndex(kind);
+    unsigned int index = getIndex(kind, 0);
     if(state == 'F') {
         printFinished(index);
         return;
@@ -166,7 +166,7 @@ void Printer::print( Kind kind, char state, int value1 ){
 }
 
 void Printer::print( Kind kind, char state, int value1, int value2 ){
-    unsigned int index = getIndex(kind);
+    unsigned int index = getIndex(kind, 0);
     if(state == 'F') {
         printFinished(index);
         return;
@@ -185,7 +185,7 @@ void Printer::print( Kind kind, char state, int value1, int value2 ){
 }
 
 void Printer::print( Kind kind, unsigned int lid, char state ){
-    unsigned int index = getIndex(kind) + lid;
+    unsigned int index = getIndex(kind, lid);
     if(state == 'F') {
         printFinished(index);
         return;
@@ -203,7 +203,7 @@ void Printer::print( Kind kind, unsigned int lid, char state ){
 }
 
 void Printer::print( Kind kind, unsigned int lid, char state, int value1 ){
-    unsigned int index = getIndex(kind) + lid;
+    unsigned int index = getIndex(kind, lid);
     if(state == 'F') {
         printFinished(index);
         return;
@@ -222,7 +222,7 @@ void Printer::print( Kind kind, unsigned int lid, char state, int value1 ){
 }
 
 void Printer::print( Kind kind, unsigned int lid, char state, int value1, int value2 ){
-    unsigned int index = getIndex(kind) + lid;
+    unsigned int index = getIndex(kind, lid);
     if(state == 'F') {
         printFinished(index);
         return;

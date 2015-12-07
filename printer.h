@@ -33,7 +33,7 @@ _Monitor Printer {
         } Info;
         vector<Info*> _infos;
         void printAll();
-        unsigned int getIndex(Kind kind);
+        unsigned int getIndex(Kind kind, unsigned int lid);
         void printFinished(unsigned int index);
 };
 
